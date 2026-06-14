@@ -98,13 +98,14 @@ button {
   justify-items: center;
   width: min(1040px, 100%);
   text-align: center;
+  transform: translateY(clamp(-44px, -4vh, -22px));
 }
 
 .intro-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin-bottom: clamp(42px, 7vh, 74px);
+  margin-bottom: clamp(60px, 9.5vh, 104px);
   color: var(--blue);
   font-size: 17px;
   font-weight: 600;
@@ -128,14 +129,33 @@ button {
 }
 
 .intro-quote {
-  max-width: 980px;
+  max-width: 880px;
   margin: clamp(26px, 4vh, 40px) auto 0;
   color: var(--muted);
-  font-size: clamp(18px, 1.45vw, 23px);
-  font-weight: 400;
-  line-height: 1.5;
+  font-size: clamp(18px, 1.4vw, 22px);
+  font-weight: 350;
+  line-height: 1.55;
   letter-spacing: -0.012em;
   text-wrap: balance;
+}
+
+.intro-emphasis {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.founder-link {
+  color: var(--blue);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.founder-link:hover {
+  color: var(--blue-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 .scroll-cue {
@@ -334,39 +354,55 @@ button {
   z-index: 4;
   top: 42px;
   left: 50%;
-  display: grid;
-  width: 124px;
-  height: 138px;
-  grid-template-rows: 1fr auto;
-  justify-items: center;
-  gap: 12px;
-  padding: 24px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 22px 14px 14px;
   border: 1px solid var(--line);
-  border-radius: 26px;
-  color: var(--blue);
+  border-radius: 20px;
   background: var(--white);
-  box-shadow: 0 14px 42px rgba(0, 38, 84, 0.08);
+  box-shadow: 0 16px 44px rgba(0, 38, 84, 0.1);
   transform: translateX(-50%);
   animation: resume-flow 10s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .apple-story[data-active="0"] .floating-resume {
-  top: 0;
-  width: 138px;
-  height: 154px;
+  top: 4px;
 }
 
-.floating-resume svg {
-  align-self: end;
-  width: 40px;
-  height: 40px;
-  stroke-width: 1.8;
+.resume-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  color: var(--blue);
+  background: rgba(0, 102, 204, 0.09);
 }
 
-.floating-resume span {
+.resume-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.9;
+}
+
+.resume-text {
+  display: grid;
+  gap: 2px;
+  text-align: left;
+}
+
+.resume-name {
   color: var(--ink);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.resume-sub {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
 }
 
 .upload-pill {
@@ -530,7 +566,7 @@ button {
   position: absolute;
   z-index: 6;
   left: 50%;
-  bottom: 42px;
+  bottom: 4px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -557,10 +593,10 @@ button {
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 6px;
   color: var(--muted);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 450;
   opacity: 0;
   transform: translateY(8px);
   animation: privacy-line-flow 10s ease forwards;
@@ -612,7 +648,7 @@ button {
 }
 
 .apple-story[data-deck-phase="email"] .deck-panel-email {
-  transition-delay: 760ms;
+  transition-delay: 300ms;
 }
 
 .apple-story[data-deck-phase="email"] .deck-panel-roles {
@@ -850,8 +886,8 @@ button {
   transform: translateY(28px) scale(0.82);
   transform-origin: 50% 22%;
   transition:
-    opacity 460ms ease 220ms,
-    transform 960ms cubic-bezier(0.16, 1, 0.3, 1) 220ms;
+    opacity 520ms ease 320ms,
+    transform 1000ms cubic-bezier(0.16, 1, 0.3, 1) 320ms;
 }
 
 .apple-story[data-deck-phase="email"] .mail-page {
@@ -1074,21 +1110,21 @@ button {
 .copy-area h1 {
   margin: 0;
   color: var(--ink);
-  font-size: clamp(54px, 4.65vw, 78px);
-  font-weight: 650;
-  line-height: 0.96;
-  letter-spacing: -0.055em;
-  text-wrap: balance;
+  font-size: clamp(32px, 2.85vw, 48px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.042em;
+  white-space: nowrap;
 }
 
 .copy-text p {
-  max-width: 620px;
-  margin: 24px 0 0;
+  max-width: 30em;
+  margin: 22px 0 0;
   color: var(--muted);
-  font-size: clamp(18px, 1.35vw, 22px);
-  font-weight: 400;
-  line-height: 1.48;
-  letter-spacing: -0.012em;
+  font-size: clamp(17px, 1.3vw, 21px);
+  font-weight: 350;
+  line-height: 1.52;
+  letter-spacing: -0.01em;
 }
 
 .story-actions {
@@ -1292,21 +1328,21 @@ button {
 @keyframes resume-flow {
   0% {
     opacity: 0;
-    transform: translateX(-50%) translateY(-28px) scale(0.9);
+    transform: translateX(-50%) translateY(-24px) scale(0.92);
   }
-  8%,
-  24% {
+  10%,
+  34% {
     opacity: 1;
     transform: translateX(-50%) translateY(0) scale(1);
   }
-  36% {
+  46% {
     opacity: 1;
-    transform: translateX(-50%) translateY(124px) scale(0.82);
+    transform: translateX(-50%) translateY(122px) scale(0.84);
   }
-  46%,
+  56%,
   100% {
     opacity: 0;
-    transform: translateX(-50%) translateY(132px) scale(0.58);
+    transform: translateX(-50%) translateY(130px) scale(0.58);
   }
 }
 
@@ -1493,6 +1529,11 @@ button {
   .copy-area {
     justify-self: center;
     text-align: center;
+  }
+
+  .copy-area h1 {
+    white-space: normal;
+    text-wrap: balance;
   }
 
   .story-progress,

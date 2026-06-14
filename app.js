@@ -45,13 +45,13 @@ const storyStates = [
   {
     title: "Upload once, privately.",
     copy:
-      "Share your resume once. We keep only the useful competency signals, then delete the file.",
+      "Upload your resume once. We keep only the useful competency signals, then delete the file.",
     phase: "upload",
   },
   {
-    title: "Fresh matches, not more noise.",
+    title: "Fresh UN matches, less noise.",
     copy:
-      "Each week, we compare new openings with your signals and bring the strongest fits forward.",
+      "We surface new UN-system roles, compare them with your signals, and bring the strongest fits forward.",
     phase: "roles",
   },
   {
@@ -86,9 +86,9 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 
 // ---- Hero: the upload→signal→orbit timeline is scrubbed by scroll position ----
 const HERO_MS = 10000;
-const HERO_SCRUB_END = 0.36;
-const ROLES_START = 0.44;
-const EMAIL_START = 0.72;
+const HERO_SCRUB_END = 0.5;
+const ROLES_START = 0.6;
+const EMAIL_START = 0.82;
 // Scrub starts a touch in, so progress 0 already shows the resume + upload
 // button (the very first frames are an intro fade we skip past).
 const HERO_START = 700;
@@ -204,9 +204,9 @@ function segmentTargets() {
   const heroRange = heroScrollable();
   return [
     0,
-    heroTop + heroRange * 0.32,
     heroTop + heroRange * 0.5,
-    heroTop + heroRange * 0.78,
+    heroTop + heroRange * 0.68,
+    heroTop + heroRange * 0.88,
     getSectionTop("#coverage"),
     getSectionTop("#signin"),
   ].map((top) => Math.max(0, Math.round(top)));
