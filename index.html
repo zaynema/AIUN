@@ -15,27 +15,21 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <header class="site-header" aria-label="Primary navigation">
-      <a class="brand" href="#top" aria-label="AIUN home">
-        <span class="brand-mark" aria-hidden="true">AI</span>
-        <span>AIUN</span>
-      </a>
-    </header>
-
     <main id="top">
-      <!-- (0) Intro — a green personal note that transitions into the product hero -->
+      <!-- (0) Intro — a quiet founder note that transitions into the product hero -->
       <section class="intro-hero" data-intro aria-labelledby="intro-name">
         <div class="intro-stage">
           <div class="intro-card" aria-hidden="true"></div>
           <div class="intro-content">
-            <div class="intro-avatar"><span>ZM</span></div>
-            <div class="intro-id">
-              <strong id="intro-name">Zayne Ma</strong>
-              <span>Built AIUN solo</span>
-            </div>
+            <span class="intro-eyebrow">
+              <span class="intro-mark" aria-hidden="true">AI</span>
+              AIUN
+            </span>
+            <h1 id="intro-name">Built by people who had to find the fit.</h1>
             <p class="intro-quote">
-              I’ve been the intern refreshing these job boards at 2am. I built
-              AIUN with love — to help you land the role, not just search for it.
+              Zayne and Nina, we were once on the same side of the match —
+              tracking tabs, deadlines, long job descriptions, and late-night
+              updates. Now we keep the right roles moving toward you.
             </p>
           </div>
           <div class="scroll-cue intro-cue" aria-hidden="true">
@@ -68,12 +62,9 @@
                     <div class="upload-pill">
                       <span class="label-upload">
                         <i data-lucide="arrow-up-to-line" aria-hidden="true"></i>
-                        Upload Once
+                        Start here
                       </span>
-                      <span class="label-analyze">Sniffing signals</span>
-                    </div>
-                    <div class="wave" aria-hidden="true">
-                      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                      <span class="label-analyze">Parsing privately</span>
                     </div>
                     <div class="ai-field">
                       <span class="field-core">
@@ -128,14 +119,26 @@
                 <article class="rank-role rank-data">
                   <span class="rank-signal">Data</span>
                   <strong>Data Research Intern</strong>
-                  <span>World Bank · Remote</span>
+                  <span>UNICEF · Copenhagen</span>
                   <em>91% fit</em>
+                </article>
+                <article class="rank-role rank-protection">
+                  <span class="rank-signal">Protection</span>
+                  <strong>Protection Associate</strong>
+                  <span>UNHCR · Budapest</span>
+                  <em>89% fit</em>
                 </article>
                 <article class="rank-role rank-gis">
                   <span class="rank-signal">GIS</span>
                   <strong>GIS Programme Officer</strong>
-                  <span>UNOSAT · Geneva</span>
+                  <span>UNOPS · Geneva</span>
                   <em>87% fit</em>
+                </article>
+                <article class="rank-role rank-climate">
+                  <span class="rank-signal">Climate</span>
+                  <strong>Climate Programme Officer</strong>
+                  <span>UNEP · Nairobi</span>
+                  <em>85% fit</em>
                 </article>
                 <article class="rank-role rank-me">
                   <span class="rank-signal">M&amp;E</span>
@@ -162,13 +165,15 @@
               </div>
             </div>
 
-            <div class="deck-panel deck-panel-email" aria-hidden="true">
+          <div class="deck-panel deck-panel-email" aria-hidden="true">
               <div class="mail-page" aria-hidden="true">
                 <article class="email-frame">
+                  <div class="email-meta-strip">
+                    <span>Subject: Your weekly shortlist is ready</span>
+                  </div>
                   <header class="email-top">
                     <div>
-                      <span>Weekly match digest</span>
-                      <strong>11 matched roles ready to apply</strong>
+                      <strong>Your weekly shortlist is ready</strong>
                     </div>
                     <em>Monday 9:04 AM</em>
                   </header>
@@ -227,7 +232,7 @@
                     <header class="email-job-head">
                       <div>
                         <h4>Data Research Intern</h4>
-                        <span>World Bank · Remote</span>
+                        <span>UNICEF · Copenhagen</span>
                       </div>
                       <em>91%</em>
                     </header>
@@ -241,7 +246,7 @@
                     <header class="email-job-head">
                       <div>
                         <h4>GIS Programme Officer</h4>
-                        <span>UNOSAT · Geneva</span>
+                        <span>UNOPS · Geneva</span>
                       </div>
                       <em>87%</em>
                     </header>
@@ -262,26 +267,18 @@
                 <span></span>
                 <span></span>
               </div>
-              <h1 id="story-title">Start privately.</h1>
+              <h1 id="story-title">Upload once, privately.</h1>
               <p id="story-copy">
-                Upload your resume once. We read it privately, keep the useful
-                signals, and delete the file.
+                Share your resume once. We keep only the useful competency
+                signals, then deletes the file.
               </p>
               <div class="story-actions">
-                <a class="primary-button" href="#signin">Match me with roles</a>
-                <a class="secondary-link" href="#coverage">See who we cover</a>
+                <a class="primary-button" href="#signin">Find my next UN step</a>
+                <a class="secondary-link" href="#coverage">Who do you track?</a>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="scroll-cue" aria-hidden="true">
-          <span class="scroll-cue-dot"></span>
-        </div>
-
-        <div class="snap-stop snap-stop-upload" aria-hidden="true"></div>
-        <div class="snap-stop snap-stop-roles" aria-hidden="true"></div>
-        <div class="snap-stop snap-stop-email" aria-hidden="true"></div>
       </section>
 
       <!-- (2) Coverage -->
@@ -321,7 +318,7 @@
             Upload once. Get a ranked shortlist of fresh UN and international
             roles in your inbox every week.
           </p>
-          <a class="primary-button cta-button" href="#top">Match me with roles</a>
+          <a class="primary-button cta-button" href="#top">Find my next UN step</a>
         </div>
       </section>
     </main>
