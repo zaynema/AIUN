@@ -1636,14 +1636,16 @@ button {
 
 .cta-section {
   display: grid;
-  align-content: center;
+  grid-template-rows: 1fr auto;
   background: var(--soft);
   text-align: center;
 }
 
 .cta-inner {
+  align-self: center;
   width: min(760px, 92%);
   margin: 0 auto;
+  padding: clamp(48px, 9vh, 96px) 0;
 }
 
 .screen-kicker {
@@ -1673,6 +1675,77 @@ button {
 
 .cta-button {
   margin-top: 34px;
+}
+
+/* Full-width product footnote (spans the section, left aligned) */
+.cta-notes {
+  align-self: end;
+  width: 100%;
+  margin-top: clamp(40px, 7vh, 80px);
+  padding: clamp(22px, 3.5vh, 32px) clamp(28px, 5vw, 84px)
+    clamp(24px, 4vh, 44px);
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+
+.cta-notes p {
+  max-width: 1280px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.003em;
+}
+
+.cta-community {
+  display: grid;
+  justify-items: center;
+  gap: 13px;
+  margin-top: 34px;
+}
+
+.cta-community-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cta-community-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.community-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink);
+  background: var(--white);
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.community-icon:hover {
+  color: var(--blue);
+  border-color: rgba(0, 102, 204, 0.4);
+  box-shadow: 0 8px 22px rgba(0, 38, 84, 0.08);
+  transform: translateY(-2px);
+}
+
+.community-icon svg {
+  width: 19px;
+  height: 19px;
 }
 
 .site-footer {
