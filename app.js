@@ -89,10 +89,11 @@ const HERO_MS = 8000;
 const HERO_SCRUB_END = 0.34;
 const ROLES_START = 0.56;
 const EMAIL_START = 0.78;
-const STORY_STOPS = [0, HERO_SCRUB_END, ROLES_START, EMAIL_START, 1];
 // Scrub starts a touch in, so progress 0 already shows the resume + upload
 // button (the very first frames are an intro fade we skip past).
 const HERO_START = 700;
+const introEl = document.querySelector(".intro-hero");
+const introCard = document.querySelector(".intro-card");
 const heroEl = document.querySelector(".hero-pin");
 const heroTimelineEl = document.querySelector(".screen-upload");
 const storyTitle = document.querySelector("#story-title");
@@ -102,7 +103,9 @@ const progressDots = Array.from(document.querySelectorAll(".story-progress span"
 const FREE_RUNNING = new Set(["wave-bounce"]);
 let heroAnims = [];
 let activeDeckIndex = -1;
-let segmentScrollLockedUntil = 0;
+let introTransitionActive = false;
+let introTransitionFallback = 0;
+let introLastScrollY = window.scrollY;
 
 function collectHeroAnims() {
   heroAnims = document.getAnimations().filter((a) => {
@@ -131,41 +134,6 @@ function easeProgress(t) {
   return t * t * (3 - 2 * t);
 }
 
-function heroScrollTopForProgress(p) {
-  const scrollable = Math.max(1, heroEl.offsetHeight - window.innerHeight);
-  return heroEl.offsetTop + scrollable * p;
-}
-
-function wheelDeltaPixels(event) {
-  if (event.deltaMode === 1) return event.deltaY * 18;
-  if (event.deltaMode === 2) return event.deltaY * window.innerHeight;
-  return event.deltaY;
-}
-
-function storySegmentBounds(p, direction) {
-  const epsilon = 0.003;
-  if (direction > 0) {
-    const upperIndex = STORY_STOPS.findIndex((stop) => stop > p + epsilon);
-    const safeUpperIndex = upperIndex === -1 ? STORY_STOPS.length - 1 : upperIndex;
-    return {
-      lower: STORY_STOPS[Math.max(0, safeUpperIndex - 1)],
-      upper: STORY_STOPS[safeUpperIndex],
-    };
-  }
-
-  let lowerIndex = 0;
-  for (let i = STORY_STOPS.length - 1; i >= 0; i -= 1) {
-    if (STORY_STOPS[i] < p - epsilon) {
-      lowerIndex = i;
-      break;
-    }
-  }
-  return {
-    lower: STORY_STOPS[lowerIndex],
-    upper: STORY_STOPS[Math.min(STORY_STOPS.length - 1, lowerIndex + 1)],
-  };
-}
-
 function applyScrub(p) {
   const localHeroProgress = easeProgress(Math.min(1, p / HERO_SCRUB_END));
   const time = HERO_START + localHeroProgress * (HERO_MS - HERO_START);
@@ -174,6 +142,8 @@ function applyScrub(p) {
       a.currentTime = time;
     } catch (e) {}
   }
+
+  heroEl.classList.toggle("cue-hidden", p > 0.04);
 
   const idx = p < ROLES_START ? 0 : p < EMAIL_START ? 1 : 2;
   if (idx !== activeDeckIndex) {
@@ -186,47 +156,60 @@ function applyScrub(p) {
   }
 }
 
+// ---- Intro: first scroll triggers a smooth landing-page transition into the hero ----
+function completeIntroTransition() {
+  if (!introTransitionActive) return;
+  window.clearTimeout(introTransitionFallback);
+  requestAnimationFrame(() => {
+    document.documentElement.classList.remove("intro-transitioning");
+    heroEl.classList.remove("hero-arriving");
+    introEl.classList.remove("intro-exit", "cue-hidden");
+    introTransitionActive = false;
+    applyScrub(heroProgress());
+  });
+}
+
+function playIntroTransition() {
+  if (!introEl || !introCard || !heroEl || introTransitionActive) return;
+  introTransitionActive = true;
+  document.documentElement.classList.add("intro-transitioning");
+  introEl.classList.add("intro-exit", "cue-hidden");
+  heroEl.classList.add("hero-arriving");
+  window.scrollTo({ top: heroEl.offsetTop, behavior: "auto" });
+  applyScrub(0);
+  introCard.addEventListener("animationend", completeIntroTransition, { once: true });
+  introTransitionFallback = window.setTimeout(completeIntroTransition, 920);
+}
+
+function onIntroWheel(event) {
+  if (!introEl || reduceMotion || event.deltaY <= 0) return;
+  const rect = introEl.getBoundingClientRect();
+  const introActive = rect.top <= 2 && rect.bottom > window.innerHeight * 0.5;
+  if (!introActive) return;
+
+  event.preventDefault();
+  playIntroTransition();
+}
+
+function maybeTriggerIntroFromScroll() {
+  if (!introEl || !heroEl || reduceMotion || introTransitionActive) return;
+  const scrollingDown = window.scrollY > introLastScrollY;
+  const insideIntro = window.scrollY > 12 && window.scrollY < heroEl.offsetTop - 12;
+  if (scrollingDown && insideIntro) {
+    playIntroTransition();
+  }
+  introLastScrollY = window.scrollY;
+}
+
 let ticking = false;
 function onScroll() {
   if (ticking) return;
   ticking = true;
   requestAnimationFrame(() => {
+    maybeTriggerIntroFromScroll();
     applyScrub(heroProgress());
     ticking = false;
   });
-}
-
-function onHeroWheel(event) {
-  if (!heroEl || reduceMotion) return;
-  const direction = Math.sign(event.deltaY);
-  if (direction === 0) return;
-
-  const rect = heroEl.getBoundingClientRect();
-  const withinHero = rect.top <= 2 && rect.bottom >= window.innerHeight - 2;
-  if (!withinHero) return;
-
-  if (performance.now() < segmentScrollLockedUntil) {
-    event.preventDefault();
-    return;
-  }
-
-  const p = heroProgress();
-  if ((direction < 0 && p <= 0.01) || (direction > 0 && p >= 0.995)) return;
-
-  const scrollable = Math.max(1, heroEl.offsetHeight - window.innerHeight);
-  const { lower, upper } = storySegmentBounds(p, direction);
-  const wheelFriction = 0.78;
-  const nextP = p + (wheelDeltaPixels(event) * wheelFriction) / scrollable;
-  const clampedP = Math.min(upper, Math.max(lower, nextP));
-  const hitSegmentEdge = clampedP !== nextP;
-
-  event.preventDefault();
-  window.scrollTo({ top: heroScrollTopForProgress(clampedP), behavior: "auto" });
-  applyScrub(clampedP);
-
-  if (hitSegmentEdge) {
-    segmentScrollLockedUntil = performance.now() + 420;
-  }
 }
 
 function setupHero() {
@@ -239,7 +222,11 @@ function setupHero() {
   applyScrub(heroProgress());
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
-  window.addEventListener("wheel", onHeroWheel, { passive: false });
+}
+
+function setupIntro() {
+  if (!introEl) return;
+  window.addEventListener("wheel", onIntroWheel, { passive: false });
 }
 
 // ---- Sections fade/slide in the first time they enter the viewport ----
@@ -274,6 +261,7 @@ function scrollToHashTarget() {
 document.documentElement.classList.add("js");
 renderOrganizations();
 renderIcons();
+setupIntro();
 setupHero();
 setupReveal();
 scrollToHashTarget();

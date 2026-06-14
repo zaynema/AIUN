@@ -23,6 +23,27 @@
     </header>
 
     <main id="top">
+      <!-- (0) Intro — a green personal note that transitions into the product hero -->
+      <section class="intro-hero" data-intro aria-labelledby="intro-name">
+        <div class="intro-stage">
+          <div class="intro-card" aria-hidden="true"></div>
+          <div class="intro-content">
+            <div class="intro-avatar"><span>ZM</span></div>
+            <div class="intro-id">
+              <strong id="intro-name">Zayne Ma</strong>
+              <span>Built AIUN solo</span>
+            </div>
+            <p class="intro-quote">
+              I’ve been the intern refreshing these job boards at 2am. I built
+              AIUN with love — to help you land the role, not just search for it.
+            </p>
+          </div>
+          <div class="scroll-cue intro-cue" aria-hidden="true">
+            <span class="scroll-cue-dot"></span>
+          </div>
+        </div>
+      </section>
+
       <!-- (1) Hero — scroll-scrubbed: sliding drives the upload→signal→orbit timeline -->
       <section class="apple-story hero-pin" data-active="0" aria-labelledby="story-title">
         <div class="story-stage">
@@ -254,146 +275,16 @@
           </div>
         </div>
 
-        <div class="scroll-hint" aria-hidden="true">
-          <span>Scroll</span>
-          <i data-lucide="chevron-down"></i>
+        <div class="scroll-cue" aria-hidden="true">
+          <span class="scroll-cue-dot"></span>
         </div>
+
+        <div class="snap-stop snap-stop-upload" aria-hidden="true"></div>
+        <div class="snap-stop snap-stop-roles" aria-hidden="true"></div>
+        <div class="snap-stop snap-stop-email" aria-hidden="true"></div>
       </section>
 
-      <!-- (2) Roles -->
-      <section class="snap-screen screen-section reveal" id="roles" aria-labelledby="roles-title">
-        <div class="screen-stage">
-          <div class="device-area">
-            <div class="device-shell">
-              <div class="device-bar">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <div class="device-screen">
-                <div class="screen-panel screen-match is-active" data-screen="1">
-                  <div class="screen-header">
-                    <span class="mini-logo">AI</span>
-                    <span>Fresh roles, ranked</span>
-                  </div>
-                  <div class="match-flow" aria-hidden="true">
-                    <div class="incoming-label">New this week</div>
-                    <article class="match-card match-card-a">
-                      <strong>Programme Analyst</strong>
-                      <span>UNDP · New York</span>
-                      <em>92% fit</em>
-                    </article>
-                    <article class="match-card match-card-b">
-                      <strong>Data Research Intern</strong>
-                      <span>World Bank · Remote</span>
-                      <em>88% fit</em>
-                    </article>
-                    <article class="match-card match-card-c">
-                      <strong>Policy Officer</strong>
-                      <span>UNICEF · Geneva</span>
-                      <em>81% fit</em>
-                    </article>
-                    <div class="match-connector"></div>
-                    <div class="match-reason">
-                      <i data-lucide="list-filter" aria-hidden="true"></i>
-                      Sorted by role fit, deadline, and profile signals.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="screen-copy">
-            <span class="screen-kicker">Step 02</span>
-            <h2 id="roles-title">Fresh roles, ranked.</h2>
-            <p>
-              We scan new openings each week, then rank them by fit so the best
-              ones rise first.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- (3) Weekly email -->
-      <section class="snap-screen screen-section reveal" id="email" aria-labelledby="email-title">
-        <div class="screen-stage">
-          <div class="device-area">
-            <div class="device-shell">
-              <div class="device-bar">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <div class="device-screen">
-                <div class="screen-panel screen-email is-active" data-screen="2">
-                  <div class="screen-header">
-                    <span class="mini-logo">AI</span>
-                    <span>Weekly email</span>
-                  </div>
-                  <div class="mail-card">
-                    <div class="mail-logo">
-                      <span class="mini-logo">AI</span>
-                      <strong>Weekly match digest</strong>
-                    </div>
-                    <p class="mail-intro">
-                      Hi,<br />
-                      here are your strongest new matches for this week.
-                    </p>
-                    <div class="mail-section-title">Top Matched Positions</div>
-                    <article class="mail-role">
-                      <div class="mail-role-head">
-                        <strong>Data Analyst Volunteer</strong>
-                        <span>Match · 88%</span>
-                      </div>
-                      <dl>
-                        <div>
-                          <dt>Organization</dt>
-                          <dd>World Food Programme</dd>
-                        </div>
-                        <div>
-                          <dt>Location</dt>
-                          <dd>Cairo, Egypt</dd>
-                        </div>
-                        <div>
-                          <dt>Deadline</dt>
-                          <dd>2026-06-09</dd>
-                        </div>
-                      </dl>
-                      <div class="mail-tags">
-                        <span>Experience</span>
-                        <span>Education</span>
-                        <span>Language</span>
-                      </div>
-                      <p>
-                        Strong data analysis background with international
-                        programme exposure.
-                      </p>
-                      <div class="advice-card">
-                        <strong>AI suggestions</strong>
-                        <ul>
-                          <li>Mention dashboard work in your first paragraph.</li>
-                          <li>Lead with English and data-cleaning experience.</li>
-                        </ul>
-                      </div>
-                      <button class="mail-button" type="button">Apply now</button>
-                    </article>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="screen-copy">
-            <span class="screen-kicker">Step 03</span>
-            <h2 id="email-title">Inbox, with notes.</h2>
-            <p>
-              You get the role, the match reason, and a few practical tips
-              before you apply.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- (4) Coverage -->
+      <!-- (2) Coverage -->
       <section class="snap-screen coverage-section reveal" id="coverage" aria-labelledby="coverage-title">
         <div class="section-heading">
           <h2 id="coverage-title">Organizations we cover</h2>
@@ -421,7 +312,7 @@
         <div class="logo-grid" id="logo-grid" aria-label="Covered organizations"></div>
       </section>
 
-      <!-- (5) CTA -->
+      <!-- (3) CTA -->
       <section class="snap-screen cta-section reveal" id="signin" aria-labelledby="cta-title">
         <div class="cta-inner">
           <span class="screen-kicker">Get started</span>
