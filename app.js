@@ -276,9 +276,7 @@ function setupCoverage() {
     const cardTop = tile.offsetTop;
 
     const finalW = Math.min(cardW * 2 + gap, gridW);
-    const finalH = isMobileStory()
-      ? Math.min(330, Math.max(258, cardH * 2.7 + gap))
-      : cardH * 2 + gap;
+    const finalH = cardH * 2 + gap;
     const finalLeft = Math.min(cardLeft, Math.max(0, gridW - finalW));
     const finalTop = Math.min(cardTop, Math.max(0, gridH - finalH));
 
@@ -382,11 +380,6 @@ function setupCoverage() {
 }
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const mobileStoryQuery = window.matchMedia("(max-width: 700px)");
-
-function isMobileStory() {
-  return mobileStoryQuery.matches || window.innerWidth <= 700;
-}
 
 // ---- Hero: the upload→signal→orbit timeline is scrubbed by scroll position ----
 const HERO_MS = 10000;
@@ -496,11 +489,6 @@ function onResize() {
 
 function setupHero() {
   if (!heroEl) return;
-  if (isMobileStory()) {
-    heroEl.dataset.active = "0";
-    heroEl.dataset.deckPhase = "upload";
-    return;
-  }
   collectHeroAnims();
   measureHero();
   if (reduceMotion) {
@@ -681,7 +669,7 @@ function onTouchEnd(event) {
 }
 
 function setupSegmentNavigation() {
-  if (reduceMotion || isMobileStory()) return;
+  if (reduceMotion) return;
   window.addEventListener("wheel", onSegmentWheel, { passive: false });
   window.addEventListener("keydown", onSegmentKey);
   window.addEventListener("touchstart", onTouchStart, { passive: true });
