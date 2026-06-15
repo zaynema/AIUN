@@ -1636,7 +1636,7 @@ button {
 
 .cta-section {
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
   background: var(--soft);
   text-align: center;
 }
@@ -1701,8 +1701,8 @@ button {
 .cta-community {
   display: grid;
   justify-items: center;
-  gap: 13px;
-  margin-top: 34px;
+  gap: 14px;
+  margin: 0 0 clamp(36px, 6vh, 64px);
 }
 
 .cta-community-label {
@@ -1737,10 +1737,23 @@ button {
 }
 
 .community-icon:hover {
-  color: var(--blue);
-  border-color: rgba(0, 102, 204, 0.4);
   box-shadow: 0 8px 22px rgba(0, 38, 84, 0.08);
   transform: translateY(-2px);
+}
+
+.community-icon--xhs:hover {
+  color: #ff2442;
+  border-color: rgba(255, 36, 66, 0.45);
+}
+
+.community-icon--wechat:hover {
+  color: #07c160;
+  border-color: rgba(7, 193, 96, 0.45);
+}
+
+.community-icon--whatsapp:hover {
+  color: #25d366;
+  border-color: rgba(37, 211, 102, 0.45);
 }
 
 .community-icon svg {
