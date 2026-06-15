@@ -389,6 +389,9 @@ const EMAIL_START = 0.82;
 // Scrub starts a touch in, so progress 0 already shows the resume + upload
 // button (the very first frames are an intro fade we skip past).
 const HERO_START = 700;
+// One uniform section-transition duration + settle pause for all segments.
+const SEGMENT_DURATION = 1500;
+const SEGMENT_SETTLE = 420;
 const introEl = document.querySelector(".intro-hero");
 const introCard = document.querySelector(".intro-card");
 const heroEl = document.querySelector(".hero-pin");
@@ -424,10 +427,21 @@ function collectHeroAnims() {
   });
 }
 
+// Hero geometry is fixed (intro is 100svh, hero is 360svh), so cache it and
+// derive progress from scrollY — avoids a forced layout read every frame.
+let heroTopCache = 0;
+let heroRangeCache = 1;
+function measureHero() {
+  if (!heroEl) return;
+  heroTopCache = heroEl.offsetTop;
+  heroRangeCache = Math.max(1, heroEl.offsetHeight - window.innerHeight);
+}
+
 function heroProgress() {
-  const rect = heroEl.getBoundingClientRect();
-  const scrollable = Math.max(1, rect.height - window.innerHeight);
-  return Math.min(1, Math.max(0, -rect.top / scrollable));
+  return Math.min(
+    1,
+    Math.max(0, (window.scrollY - heroTopCache) / heroRangeCache),
+  );
 }
 
 function easeProgress(t) {
@@ -459,7 +473,8 @@ function applyScrub(p) {
 
 let ticking = false;
 function onScroll() {
-  if (ticking) return;
+  // The segment animation drives applyScrub itself; don't double-run here.
+  if (ticking || segmentAnimating) return;
   ticking = true;
   requestAnimationFrame(() => {
     applyScrub(heroProgress());
@@ -467,16 +482,22 @@ function onScroll() {
   });
 }
 
+function onResize() {
+  measureHero();
+  applyScrub(heroProgress());
+}
+
 function setupHero() {
   if (!heroEl) return;
   collectHeroAnims();
+  measureHero();
   if (reduceMotion) {
     applyScrub(1);
     return;
   }
   applyScrub(heroProgress());
   window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
+  window.addEventListener("resize", onResize);
 }
 
 function setupIntro() {
@@ -567,9 +588,10 @@ async function goToSegment(index) {
 
   segmentAnimating = true;
   document.documentElement.classList.add("segment-animating");
-  const duration = nextIndex === 0 ? 1300 : nextIndex === 1 ? 2200 : 1800;
-  await animateSegmentScroll(targetTop, duration);
-  await wait(nextIndex >= 1 && nextIndex <= 3 ? 720 : 180);
+  // One consistent duration for every section so transitions feel uniform.
+  await animateSegmentScroll(targetTop, SEGMENT_DURATION);
+  // Let the section's own CSS transition settle before unlocking.
+  await wait(SEGMENT_SETTLE);
   document.documentElement.classList.remove("segment-animating");
   segmentAnimating = false;
 }

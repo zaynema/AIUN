@@ -1642,10 +1642,18 @@ button {
 }
 
 .cta-inner {
-  align-self: center;
+  align-self: start;
   width: min(760px, 92%);
   margin: 0 auto;
-  padding: clamp(48px, 9vh, 96px) 0;
+  padding: clamp(64px, 13vh, 150px) 0 0;
+}
+
+.cta-inner .cta-subtitle {
+  max-width: 620px;
+}
+
+.cta-subtitle-line {
+  white-space: nowrap;
 }
 
 .screen-kicker {
@@ -1689,20 +1697,19 @@ button {
 }
 
 .cta-notes p {
-  max-width: 1280px;
-  margin: 0 auto;
+  margin: 0;
   color: var(--muted);
   font-size: 12px;
   font-weight: 400;
-  line-height: 1.65;
-  letter-spacing: -0.003em;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
 }
 
 .cta-community {
   display: grid;
   justify-items: center;
-  gap: 14px;
-  margin: 0 0 clamp(36px, 6vh, 64px);
+  gap: 12px;
+  margin: 0 0 clamp(22px, 3.5vh, 38px);
 }
 
 .cta-community-label {
@@ -1721,44 +1728,28 @@ button {
 }
 
 .community-icon {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--line);
+  display: block;
+  width: 38px;
+  height: 38px;
+  overflow: hidden;
   border-radius: 50%;
-  color: var(--ink);
   background: var(--white);
+  box-shadow: 0 1px 3px rgba(0, 38, 84, 0.12);
   transition:
-    border-color 180ms ease,
-    color 180ms ease,
     box-shadow 180ms ease,
     transform 180ms ease;
 }
 
 .community-icon:hover {
-  box-shadow: 0 8px 22px rgba(0, 38, 84, 0.08);
+  box-shadow: 0 10px 24px rgba(0, 38, 84, 0.18);
   transform: translateY(-2px);
 }
 
-.community-icon--xhs:hover {
-  color: #ff2442;
-  border-color: rgba(255, 36, 66, 0.45);
-}
-
-.community-icon--wechat:hover {
-  color: #07c160;
-  border-color: rgba(7, 193, 96, 0.45);
-}
-
-.community-icon--whatsapp:hover {
-  color: #25d366;
-  border-color: rgba(37, 211, 102, 0.45);
-}
-
-.community-icon svg {
-  width: 19px;
-  height: 19px;
+.community-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .site-footer {
@@ -1966,6 +1957,15 @@ button {
 .js .reveal.in {
   opacity: 1;
   transform: none;
+}
+
+/* Promote only the actively-moving layers, and only while a section
+   transition is running, to avoid persistent compositing cost. */
+.segment-animating .device-shell,
+.segment-animating .deck-panel,
+.segment-animating .rank-role,
+.segment-animating .mail-page {
+  will-change: transform, opacity;
 }
 
 @media (max-width: 1100px) {
